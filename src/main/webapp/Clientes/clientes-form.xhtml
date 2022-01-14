@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<ui:composition template="../layout.xhtml">
+    <ui:define name="content">
+        <h:form id="productForm">
+            <p:panel header="Crear Cliente">
+                <h:panelGrid columns="1">
+                    <p:outputLabel for="name" value="Nombre: " />
+                    <p:inputText id="name" value="#{clientesController.clientesdto.nombre}" />
+                    <p:outputLabel for="email" value="Email: " />
+                    <p:inputText id="email" value="#{clientesController.clientesdto.email}" />
+                    <p:outputLabel for="price" value="Telefono: " />
+                    <p:inputText id="price" value="#{clientesController.clientesdto.telefono}" />
+                    <p:outputLabel for="@next" value="Tipo de documento"/>
+                    <h:selectOneMenu value="#{clientesController.clientesdto.tipoDocumento}" converter="#{tipoDocumentoConverter}">
+                        <f:selectItem itemLabel="Choose one .." itemValue="#{null}" />
+                        <f:selectItems value="#{clientesController.tipoDocumentoList}" var="tipoDocumento"
+                                       itemValue="#{tipoDocumento.idTipoDocumento}" itemLabel="#{tipoDocumento.descripcion}"/>
+                    </h:selectOneMenu>
+                    <p:outputLabel for="numero" value="Numero Documento: " />
+                    <p:inputText id="numero" value="#{clientesController.clientesdto.numeroDocumento}" />
+                    <h:commandButton value="Guardar" action="#{clientesController.save}" />
+                </h:panelGrid>
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>

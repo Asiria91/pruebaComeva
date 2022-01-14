@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<ui:composition template="../layout.xhtml">
+    <ui:define name="content">
+        <h:form id="form">
+            <p:panel header="Notificaciones">
+                <p:dataTable id="table" var="notificacion" value="#{listNotificacion.notificacionList}">
+                    <p:column>
+                        <f:facet name="header"># Id</f:facet>
+                        <h:outputText value="#{notificacion.idNotificacion}" />
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">Nombre del cliente</f:facet>
+                        <h:outputText value="#{notificacion.clientes.nombre}" />
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">Telefono</f:facet>
+                        <h:outputText value="#{notificacion.clientes.telefono}" />
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">Email</f:facet>
+                        <h:outputText value="#{notificacion.clientes.email}" />
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">Medio Notificacion</f:facet>
+                        <h:outputText value="#{notificacion.tipoNotificacion.descripcion}" />
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">Opciones</f:facet>
+                        <h:commandButton id="delete-button"
+                                         action="#{listNotificacion.delete(notificacion)}"
+                                         value="Eliminar" />
+                        <h:commandButton id="edit-button"
+                                         action="#{listNotificacion.edit(notificacion)}"
+                                         value="Editar" />
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>

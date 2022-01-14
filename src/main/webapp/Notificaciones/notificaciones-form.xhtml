@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<ui:composition template="../layout.xhtml">
+    <ui:define name="content">
+        <h:form id="notificacionesForm">
+            <p:panel header="Crear Notificacion">
+                <h:panelGrid columns="1">
+                    <p:outputLabel for="@next" value="Cliente : "/>
+                    <h:selectOneMenu value="#{notificacionController.notificacionDTO.clientes}" converter="#{tipoDocumentoConverter}">
+                        <f:selectItem itemLabel="Escoger una opcion .." itemValue="#{null}" />
+                        <f:selectItems value="#{notificacionController.clientes}" var="cliente"
+                                       itemValue="#{cliente.idCliente}" itemLabel="#{cliente.nombre}"/>
+                    </h:selectOneMenu>
+                    <p:outputLabel for="@next" value="Tipo de Notificacion : "/>
+                    <h:selectOneMenu value="#{notificacionController.notificacionDTO.tipoNotificacion}" converter="#{tipoDocumentoConverter}">
+                        <f:selectItem itemLabel="Escoger una opcion .." itemValue="#{null}" />
+                        <f:selectItems value="#{notificacionController.tipoNotificacionList}" var="tipoNotificacion"
+                                       itemValue="#{tipoNotificacion.idTipoNotificacion}" itemLabel="#{tipoNotificacion.descripcion}"/>
+                    </h:selectOneMenu>
+                    <p:outputLabel for="@next" value="Inscribir : "/>
+                    <p:selectBooleanCheckbox value="#{notificacionController.notificacionDTO.inscrito}" itemLabel="Inscrito"/>
+                    <p:outputLabel for="@next" value="Notificar : "/>
+                    <p:selectBooleanCheckbox value="#{notificacionController.notificacionDTO.notificado}" itemLabel="Notificar"/>
+                    <h:commandButton value="Guardar" action="#{notificacionController.save}" />
+                </h:panelGrid>
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>

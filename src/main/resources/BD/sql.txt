@@ -1,0 +1,69 @@
+CREATE TABLE public.tipo_documento (
+	id_tipo_documento serial NOT NULL,
+	codigo varchar NOT NULL,
+	descripcion varchar NOT NULL,
+	CONSTRAINT tipo_documento_pk PRIMARY KEY (id_tipo_documento)
+);
+COMMENT ON TABLE public.tipo_documento IS 'Tabla de los tipos de documento';
+
+-- Column comments
+
+COMMENT ON COLUMN public.tipo_documento.id_tipo_documento IS 'id de la tabla';
+COMMENT ON COLUMN public.tipo_documento.codigo IS 'codigo del tipo de documento';
+COMMENT ON COLUMN public.tipo_documento.descripcion IS 'descripcion ejemplo : cedula de ciudadania';
+
+CREATE TABLE public.clientes (
+	id_cliente serial NOT NULL,
+	nombre varchar NOT NULL,
+	fk_tipo_documento int NOT NULL,
+	numero_documento numeric NOT NULL,
+	telefono numeric NOT NULL,
+	email varchar NOT NULL,
+	CONSTRAINT clientes_pk PRIMARY KEY (id_cliente),
+	CONSTRAINT clientes_fk FOREIGN KEY (fk_tipo_documento) REFERENCES public.tipo_documento(id_tipo_documento)
+);
+COMMENT ON TABLE public.clientes IS 'Tabla que contiene el listado de clientes';
+
+-- Column comments
+
+COMMENT ON COLUMN public.clientes.id_cliente IS 'Id del cliente';
+COMMENT ON COLUMN public.clientes.nombre IS 'nombre completo del cliente';
+COMMENT ON COLUMN public.clientes.fk_tipo_documento IS 'Clave foranea del tipo de documento';
+COMMENT ON COLUMN public.clientes.numero_documento IS 'numero del documento de identidad';
+
+CREATE TABLE public.tipo_notificacion (
+	id_tipo_notificacion serial NOT NULL,
+	codigo varchar NOT NULL,
+	descripcion varchar NOT NULL,
+	CONSTRAINT tipo_notificacion_pk PRIMARY KEY (id_tipo_notificacion)
+);
+COMMENT ON TABLE public.tipo_notificacion IS 'tabla de tipo de notificacion';
+
+-- Column comments
+
+COMMENT ON COLUMN public.tipo_notificacion.id_tipo_notificacion IS 'id tipo de notificacion';
+COMMENT ON COLUMN public.tipo_notificacion.codigo IS 'CE: correo electronico, FI: fisica, mt: mensaje de texto';
+
+CREATE TABLE public.notificacion (
+	id_notificacion serial NOT NULL,
+	fk_cliente int NOT NULL,
+	fk_tipo_notificacion varchar NOT NULL,
+	fecha_creacion timestamp NOT NULL DEFAULT current_timestamp
+);
+COMMENT ON TABLE public.notificacion IS 'tabla que asocia los clientes los cuales se van a a actualizar sus datos y por que metodo.';
+
+-- Column comments
+
+COMMENT ON COLUMN public.notificacion.id_notificacion IS 'id de la tabla';
+COMMENT ON COLUMN public.notificacion.fk_cliente IS 'foreign key tabla cliente';
+COMMENT ON COLUMN public.notificacion.fk_tipo_notificacion IS 'foreing key tabla tipo notificacion';
+COMMENT ON COLUMN public.notificacion.fecha_creacion IS 'fecha de creacion';
+
+ALTER TABLE public.notificacion ADD notificado boolean NOT NULL;
+ALTER TABLE public.notificacion ADD inscrito boolean NOT NULL;
+
+ALTER TABLE public.notificacion ALTER COLUMN fk_tipo_notificacion TYPE int4 USING fk_tipo_notificacion::int4;
+
+
+
+
